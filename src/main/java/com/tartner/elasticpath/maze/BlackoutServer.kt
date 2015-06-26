@@ -11,7 +11,7 @@ public interface BlackoutServer {
 
     POST("/api/move")
     fun moveInDirection( Query("mazeGuid") mazeGuid: UUID,
-        Query("direction") direction: Direction) : RawServerResponse
+        Query("direction") moveDirection: MoveDirection) : RawServerResponse
 
     POST("/api/jump")
     fun jumpToCell( Query("mazeGuid") mazeGuid: UUID, Query("x") x: Int,
@@ -21,7 +21,7 @@ public interface BlackoutServer {
     fun getCurrentCell( Query("mazeGuid") mazeGuid: UUID) : RawServerResponse
 }
 
-public enum class Direction(val apiText: String) {
+public enum class MoveDirection(val apiText: String) {
     North("NORTH"),
     East("EAST"),
     South("SOUTH"),
@@ -36,7 +36,7 @@ public class RawServerResponse {
     public var north : String = ""
     public var east : String = ""
     public var south : String = ""
-    public var west	: String = ""
+    public var west : String = ""
     public var x : Int = Int.MIN_VALUE
     public var y : Int = Int.MIN_VALUE
 

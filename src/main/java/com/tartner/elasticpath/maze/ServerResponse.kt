@@ -5,7 +5,7 @@ import java.util.*
 public enum class MazeCellAccessibility( val serverResponseText : String ) {
     Blocked("BLOCKED"),
     Visited("VISITED"),
-    Unexplored("UNEXPLORED")
+    Unexplored("UNEXPLORED");
 
     companion object {
         public fun findForServerResponseText( serverResponseText : String ) :

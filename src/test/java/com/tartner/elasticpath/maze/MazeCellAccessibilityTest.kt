@@ -11,6 +11,6 @@ public class MazeCellAccessibilityTest {
 
     private fun checkConversion(expected: MazeCellAccessibility, response: String) {
         val converted = MazeCellAccessibility.findForServerResponseText(response)
-        assertThat(expected, equalTo(converted))
+        assertThat(converted, equalTo(expected))
     }
 }
