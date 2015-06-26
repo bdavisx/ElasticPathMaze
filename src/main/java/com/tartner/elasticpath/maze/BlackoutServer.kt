@@ -39,5 +39,14 @@ public class RawServerResponse {
     public var west	: String = ""
     public var x : Int = Int.MIN_VALUE
     public var y : Int = Int.MIN_VALUE
+
+    public fun toServerResponse() : ServerResponse {
+        return ServerResponse( UUID.fromString(mazeGuid), note, atEnd, previouslyVisited,
+            MazeCellAccessibility.findForServerResponseText(north),
+            MazeCellAccessibility.findForServerResponseText(east),
+            MazeCellAccessibility.findForServerResponseText(south),
+            MazeCellAccessibility.findForServerResponseText(west),
+            x, y )
+    }
 }
 

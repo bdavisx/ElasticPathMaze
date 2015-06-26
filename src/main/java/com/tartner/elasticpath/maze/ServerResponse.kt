@@ -2,7 +2,19 @@ package com.tartner.elasticpath.maze
 
 import java.util.*
 
-enum class MazeCellAccessibility { Blocked, Visited, Unexplored }
+public enum class MazeCellAccessibility( val serverResponseText : String ) {
+    Blocked("BLOCKED"),
+    Visited("VISITED"),
+    Unexplored("UNEXPLORED")
+
+    companion object {
+        public fun findForServerResponseText( serverResponseText : String ) :
+            MazeCellAccessibility {
+            return MazeCellAccessibility.values().first(
+                { mca -> mca.serverResponseText.equals(serverResponseText) })
+        }
+    }
+}
 
 public data class ServerResponse(
     public val mazeGuid : UUID,
