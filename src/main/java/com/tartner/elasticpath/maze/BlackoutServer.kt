@@ -21,20 +21,17 @@ public interface BlackoutServer {
 // TODO: remove wrapper by setting up gson to "go up a level (currentCell)" and return
 // RawServerResponse
 public class RawServerResponseWrapper {
-    public var currentCell : RawServerResponse? = null
+    public var currentCell : RawServerResponse = RawServerResponse()
 
     public fun toServerResponse() : ServerResponse {
-        val cell = currentCell
-        if( cell == null ) throw IllegalStateException("Something went wrong")
-
         val directionAccessibility = arrayOf(
-            createDirectionAccessibility(MoveDirection.North, cell.north),
-            createDirectionAccessibility(MoveDirection.East, cell.east),
-            createDirectionAccessibility(MoveDirection.South, cell.south),
-            createDirectionAccessibility(MoveDirection.West, cell.west)).toList()
+            createDirectionAccessibility(MoveDirection.North, currentCell.north),
+            createDirectionAccessibility(MoveDirection.East, currentCell.east),
+            createDirectionAccessibility(MoveDirection.South, currentCell.south),
+            createDirectionAccessibility(MoveDirection.West, currentCell.west)).toList()
 
-        return ServerResponse(UUID.fromString(cell.mazeGuid), cell.note, cell.atEnd,
-            cell.previouslyVisited, directionAccessibility, cell.x, cell.y)
+        return ServerResponse(UUID.fromString(currentCell.mazeGuid), currentCell.note, currentCell.atEnd,
+            currentCell.previouslyVisited, directionAccessibility, currentCell.x, currentCell.y)
     }
 
     private fun createDirectionAccessibility( direction : MoveDirection, cellResponseText : String )
@@ -55,6 +52,5 @@ public class RawServerResponse {
     public var west : String = ""
     public var x : Int = Int.MIN_VALUE
     public var y : Int = Int.MIN_VALUE
-
 }
 
