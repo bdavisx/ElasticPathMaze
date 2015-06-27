@@ -21,6 +21,7 @@ public class MazePathFinder( private val server : BlackoutServer ) {
     }
 
     private fun findPath(currentResponse: ServerResponse): ServerResponse {
+        if(currentResponse.atEnd) { return currentResponse }
         log.debug("Currently at ({},{})", currentResponse.x, currentResponse.y)
         val unexploredCellDirections = currentResponse.directionAccessibility.filter {
             da -> da.accessibility.equals(MazeCellAccessibility.Unexplored) }.map {
@@ -29,15 +30,17 @@ public class MazePathFinder( private val server : BlackoutServer ) {
         for(cellDirection in unexploredCellDirections) {
             log.debug("Going to try going direction: {}", cellDirection)
             // TODO: wrap server in class to return a ServerRespobnse
-            val nextResponse = server.moveInDirection(mazeGuid, cellDirection.serverRequestText)
+            val moveResponse = server.moveInDirection(mazeGuid, cellDirection.serverRequestText)
                 .toServerResponse()
-            if( nextResponse.atEnd) { return nextResponse }
-            findPath(nextResponse)
+            val findPathResponse = findPath(moveResponse)
+            if(findPathResponse.atEnd) { return findPathResponse }
+
+            log.debug("No resolution, jumping back to ({},{})", currentResponse.x,
+                currentResponse.y)
             server.jumpToCell(mazeGuid, currentResponse.x, currentResponse.y)
         }
 
-        log.debug("Couldn't find way: last response note: {}", currentResponse.note)
-        throw IllegalStateException( "Couldn't find way thru maze, damnit!")
+        return currentResponse
     }
 }
 
