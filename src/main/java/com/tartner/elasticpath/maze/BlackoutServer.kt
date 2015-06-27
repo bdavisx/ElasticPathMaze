@@ -11,7 +11,7 @@ public interface BlackoutServer {
 
     POST("/api/move")
     fun moveInDirection( Query("mazeGuid") mazeGuid: UUID,
-        Query("direction") moveDirection: MoveDirection) : RawServerResponseWrapper
+        Query("direction") moveDirection: String) : RawServerResponseWrapper
 
     POST("/api/jump")
     fun jumpToCell( Query("mazeGuid") mazeGuid: UUID, Query("x") x: Int,
@@ -21,13 +21,6 @@ public interface BlackoutServer {
     fun getCurrentCell( Query("mazeGuid") mazeGuid: UUID) : RawServerResponseWrapper
 }
 
-public enum class MoveDirection(public val apiText: String) {
-    North("NORTH"),
-    East("EAST"),
-    South("SOUTH"),
-    West("WEST")
-}
-
 public class RawServerResponseWrapper {
     public var currentCell : RawServerResponse? = null
 
@@ -35,13 +28,20 @@ public class RawServerResponseWrapper {
         val cell = currentCell
         if( cell == null ) throw IllegalStateException("Something went wrong")
 
+        val directionAccessibility = arrayOf(
+            createDirectionAccessibility(MoveDirection.North, cell.north),
+            createDirectionAccessibility(MoveDirection.East, cell.east),
+            createDirectionAccessibility(MoveDirection.South, cell.south),
+            createDirectionAccessibility(MoveDirection.West, cell.west)).toList()
+
         return ServerResponse(UUID.fromString(cell.mazeGuid), cell.note, cell.atEnd,
-            cell.previouslyVisited,
-            MazeCellAccessibility.findForServerResponseText(cell.north),
-            MazeCellAccessibility.findForServerResponseText(cell.east),
-            MazeCellAccessibility.findForServerResponseText(cell.south),
-            MazeCellAccessibility.findForServerResponseText(cell.west),
-            cell.x, cell.y)
+            cell.previouslyVisited, directionAccessibility, cell.x, cell.y)
+    }
+
+    private fun createDirectionAccessibility( direction : MoveDirection, cellResponseText : String )
+        : DirectionAccessibility {
+        return DirectionAccessibility(direction,
+            MazeCellAccessibility.findForServerResponseText(cellResponseText))
     }
 }
 

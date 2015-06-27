@@ -17,12 +17,20 @@ public class RawServerResponseTest {
         assertThat(serverResponse.note, equalTo(NoteText))
         assertThat(serverResponse.atEnd, equalTo(false))
         assertThat(serverResponse.previouslyVisited, equalTo(true))
-        assertThat(serverResponse.northAccessibility, equalTo(MazeCellAccessibility.Blocked))
-        assertThat(serverResponse.eastAccessibility, equalTo(MazeCellAccessibility.Visited))
-        assertThat(serverResponse.southAccessibility, equalTo(MazeCellAccessibility.Unexplored))
-        assertThat(serverResponse.westAccessibility, equalTo(MazeCellAccessibility.Blocked))
+        assertThat(accessibilityForDirection(MoveDirection.North, serverResponse), equalTo(MazeCellAccessibility.Blocked))
+        assertThat(accessibilityForDirection(MoveDirection.East, serverResponse), equalTo(MazeCellAccessibility.Visited))
+        assertThat(accessibilityForDirection(MoveDirection.South, serverResponse), equalTo(MazeCellAccessibility.Unexplored))
+        assertThat(accessibilityForDirection(MoveDirection.West, serverResponse), equalTo(MazeCellAccessibility.Blocked))
         assertThat(serverResponse.x, equalTo(1))
         assertThat(serverResponse.y, equalTo(2))
+    }
+
+    private fun accessibilityForDirection(moveDirection: MoveDirection,
+        serverResponse: ServerResponse): MazeCellAccessibility {
+        return serverResponse.directionAccessibility.single { da ->
+            da.direction.equals(
+                moveDirection)
+        }.accessibility
     }
 
     private fun createRawResponse(): RawServerResponseWrapper {

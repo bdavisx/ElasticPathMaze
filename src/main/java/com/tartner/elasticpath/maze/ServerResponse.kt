@@ -2,6 +2,13 @@ package com.tartner.elasticpath.maze
 
 import java.util.*
 
+public enum class MoveDirection(public val serverRequestText: String) {
+    North("NORTH"),
+    East("EAST"),
+    South("SOUTH"),
+    West("WEST")
+}
+
 public enum class MazeCellAccessibility( val serverResponseText : String ) {
     Blocked("BLOCKED"),
     Visited("VISITED"),
@@ -16,15 +23,15 @@ public enum class MazeCellAccessibility( val serverResponseText : String ) {
     }
 }
 
+public data class DirectionAccessibility( val direction : MoveDirection,
+    val accessibility : MazeCellAccessibility )
+
 public data class ServerResponse(
     public val mazeGuid : UUID,
     public val note	: String,
     public val atEnd : Boolean,
     public val previouslyVisited : Boolean,
-    public val northAccessibility : MazeCellAccessibility,
-    public val eastAccessibility : MazeCellAccessibility,
-    public val southAccessibility : MazeCellAccessibility,
-    public val westAccessibility : MazeCellAccessibility,
+    public val directionAccessibility: Iterable<DirectionAccessibility>,
     public val x : Int,
     public val y : Int ) {
 }
