@@ -16,11 +16,10 @@ public interface BlackoutServer {
     POST("/api/jump")
     fun jumpToCell( Query("mazeGuid") mazeGuid: UUID, Query("x") x: Int,
         Query("y") y: Int) : RawServerResponseWrapper
-
-    GET("/api/currentCell")
-    fun getCurrentCell( Query("mazeGuid") mazeGuid: UUID) : RawServerResponseWrapper
 }
 
+// TODO: remove wrapper by setting up gson to "go up a level (currentCell)" and return
+// RawServerResponse
 public class RawServerResponseWrapper {
     public var currentCell : RawServerResponse? = null
 
