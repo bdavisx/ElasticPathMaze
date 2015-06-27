@@ -23,6 +23,7 @@ public class Configuration {
             .create()
         return gson
     }
+
     private fun configureRestAdapter(gson: Gson, url: String): RestAdapter {
         val builder = RestAdapter.Builder()
             .setEndpoint(url)
