@@ -2,7 +2,7 @@
 
 I saw this "developer challenge" when I was looking at jobs in the Portland area. Some Elastic 
 Path jobs came up in Vancouver and they mentioned solving this challenge as 
-a test. (http://www.epdeveloperchallenge.com/). It fit with some libraries I wanted to learn more 
+a test (http://www.epdeveloperchallenge.com/). It fit with some libraries I wanted to learn more 
 about anyway:
  
  * Retrofit
