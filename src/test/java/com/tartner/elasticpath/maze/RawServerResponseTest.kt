@@ -1,9 +1,9 @@
 package com.tartner.elasticpath.maze
 
-import org.junit.Test
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
-import java.util.*
+import org.hamcrest.Matchers.equalTo
+import org.junit.Test
+import java.util.UUID
 
 public class RawServerResponseTest {
     private val GuidText = "15c2d4ba-4bef-4e5c-b68d-baaeef825bd9"
@@ -25,7 +25,7 @@ public class RawServerResponseTest {
         assertThat(serverResponse.y, equalTo(2))
     }
 
-    private fun createRawResponse(): RawServerResponse {
+    private fun createRawResponse(): RawServerResponseWrapper {
         val rawResponse = RawServerResponse()
         rawResponse.mazeGuid = GuidText
         rawResponse.note = NoteText
@@ -37,6 +37,8 @@ public class RawServerResponseTest {
         rawResponse.west = MazeCellAccessibility.Blocked.serverResponseText
         rawResponse.x = 1
         rawResponse.y = 2
-        return rawResponse
+        val wrapper = RawServerResponseWrapper()
+        wrapper.currentCell = rawResponse
+        return wrapper
     }
 }

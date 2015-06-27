@@ -4,9 +4,11 @@ import java.util.*
 
 public data class VisitedCell( x : Int, y : Int )
 
-public class MazePathFinder() {
-    val VisitedCell : Set<VisitedCell> = HashSet<VisitedCell>()
+public class MazePathFinder( private val server : BlackoutServer ) {
+    private val visitedCells : Set<VisitedCell> = HashSet<VisitedCell>()
 
-
+    public fun runMaze() {
+        val initResponse = server.initializeMaze()
+    }
 }
 
