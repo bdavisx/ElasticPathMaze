@@ -9,7 +9,7 @@ public class RawServerResponseTest {
     private val GuidText = "15c2d4ba-4bef-4e5c-b68d-baaeef825bd9"
     private val NoteText = "Test Note"
 
-    Test fun checkBlocked() {
+    @Test fun checkBlocked() {
         val rawResponse = createRawResponse()
         val serverResponse = rawResponse.toServerResponse()
 

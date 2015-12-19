@@ -6,16 +6,16 @@ import retrofit.http.Query
 import java.util.UUID
 
 public interface BlackoutServer {
-    POST("/api/init")
+    @POST("/api/init")
     fun initializeMaze() : RawServerResponseWrapper
 
-    POST("/api/move")
-    fun moveInDirection( Query("mazeGuid") mazeGuid: UUID,
-        Query("direction") moveDirection: String) : RawServerResponseWrapper
+    @POST("/api/move")
+    fun moveInDirection( @Query("mazeGuid") mazeGuid: UUID,
+        @Query("direction") moveDirection: String) : RawServerResponseWrapper
 
-    POST("/api/jump")
-    fun jumpToCell( Query("mazeGuid") mazeGuid: UUID, Query("x") x: Int,
-        Query("y") y: Int) : RawServerResponseWrapper
+    @POST("/api/jump")
+    fun jumpToCell( @Query("mazeGuid") mazeGuid: UUID, @Query("x") x: Int,
+        @Query("y") y: Int) : RawServerResponseWrapper
 }
 
 // TODO: remove wrapper by setting up gson to "go up a level (currentCell)" and return
